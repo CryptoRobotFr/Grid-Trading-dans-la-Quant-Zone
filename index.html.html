@@ -1,0 +1,689 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Grid Trading dans la Quant Zone de FTX</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 90%;
+		font-size: 20px;
+		background-color: rgb(250, 250, 255);
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8c59303a-6605-4afe-b4f1-31c25f9af0ba" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1586023914901-7b36abf78de3?ixlib=rb-1.2.1&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">💱</span></div><h1 class="page-title">Grid Trading dans la Quant Zone de FTX</h1></header><div class="page-body"><p id="2a83161a-06f8-48a1-b279-d3281c12e345" class="">Ce petit tutoriel est une initiation à la mise en place de stratégie de Grid Trading dans la Quant Zone de l&#x27;échangeur FTX.</p><p id="411f27b0-3648-48da-a24c-69b8b205ecc2" class="">Pour ce tutoriel vous aurez besoin d&#x27;un compte FTX. Si vous n&#x27;en avez pas il est important d&#x27;en créer un avec un lien d&#x27;affiliation car cela réduira vos frais et cela n&#x27;est pas négligeable pour une stratégie de Grid Trading. Vous pouvez utiliser notre lien d&#x27;affiliation ci-dessous pour nous soutenir :) </p><figure id="b97f5444-a93c-4762-b455-5faa881281ec"><a href="https://ftx.com/#a=cryptorobot" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">FTX</div><div class="bookmark-description">FTX Cryptocurrency Derivatives Exchange, built by traders, for traders. Buy and sell BTC, ETH, USDT, BNB futures and index futures with up to 101x leverage.</div></div><div class="bookmark-href"><img src="https://ftx.com/favicon.ico?v=2" class="icon bookmark-icon"/>https://ftx.com/#a=cryptorobot</div></div><img src="https://i.imgur.com/yQDvfFn.png" class="bookmark-image"/></a></figure><p id="5f8c2861-113b-4cf0-9f47-51cfd90b9932" class="">
+</p><p id="53d56eb8-103f-4741-974f-7d216efec91b" class="">Si vous souhaitez suivre ce tutoriel à l&#x27;aide d&#x27;une vidéo vous pouvez retrouver ce tutoriel via cette vidéo You Tube : </p><figure id="3989fa9a-9a13-4745-ac6a-386ad2989cf1"><a href="https://youtu.be/0guTyHrDTXA" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">- YouTube</div><div class="bookmark-description">Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.</div></div><div class="bookmark-href"><img src="https://www.youtube.com/s/desktop/be17f2ce/img/favicon.ico" class="icon bookmark-icon"/>https://youtu.be/0guTyHrDTXA</div></div></a></figure><p id="09035e9b-5bcf-4172-b199-9d8734214dd6" class="">
+</p><p id="9c96cd1c-b6df-4e9b-bba4-914ea2417418" class="block-color-gray_background">Table des matières </p><hr id="d38ae85e-f2c3-4823-85aa-2ccc52f5277e"/><nav id="32fe938f-6f47-415f-b077-fc63e8682181" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#79efe7d9-7de2-4fa7-a774-845380d55eaa">Comment ça marche</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#413ed80f-7b4c-4e83-afcc-d5d45785b24d">Tutoriel</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6327973e-8150-4b20-aadf-4c7e4222be40">Étape 1 : Créer un sous compte FTX dédié à la stratégie</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bb08bc60-a3b4-42c0-b66a-4ae13a7e7446">Étape 2 : Accéder à la Quant Zone de FTX</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ef95e620-df72-4e96-aa66-9c3f182066d0">Étape 3 : Créer votre première règle de trading</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#66418b46-2a96-41c1-bd74-92975976378d">Étape 4 : Définir une règle pour acheter vos actifs</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#358c90cf-e8e5-4a09-8906-1fbe10dfb929">Étape 5 : Définir une règle pour vendre vos actifs</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bc514a59-8810-4e9e-aba7-a36a0afd1b5b">Étape 6 : Ajouter des USD a votre sous-compte</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#943d7338-3415-4b3e-b603-e66fff7cfb57">Étape 7 : Admirer le résultat</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bad872ba-3a5c-45f6-8481-6d94a95a37f2">FAQ</a></div></nav><h1 id="79efe7d9-7de2-4fa7-a774-845380d55eaa" class="">Comment ça marche</h1><hr id="80bd8c75-3cf4-4823-aafc-2aa9dd0fc7fc"/><p id="3bc83180-d27d-46f1-bce2-aa116279d4d2" class="">Pour cette introduction nous travaillerons sur la paire SOL/USD.
+Le but de cette stratégie sera d&#x27;avoir un équilibre constant entre notre balance de SOL et d&#x27;USD. On essaiera donc de garder en continu 50% de SOL et 50% d&#x27;USD.
+Si notre solde de SOL dépasse les 50% alors on déchargera notre position en vendant des SOL contre des USD, si au contraire notre solde de SOL représente moins de 50% de solde total, alors on renforcera notre position en SOL en achetant des SOL contre des USD.
+
+Grâce à cette stratégie on profite de la volatilité du marché sans prendre plus de risque que notre exposition de 50% sur une crypto-monnaie choisie ici le SOL. 
+Cette stratégie a un gain maximum lorsqu&#x27;il y a souvent des gros mouvements de volatilité puis un retour a la normal.
+Cette stratégie est donc exactement comme une stratégie de Grid Trading sans placer à proprement parler des grilles. </p><h1 id="413ed80f-7b4c-4e83-afcc-d5d45785b24d" class="">Tutoriel</h1><hr id="2d341a51-d6e4-408c-b404-137a902fd492"/><h3 id="6327973e-8150-4b20-aadf-4c7e4222be40" class="">Étape 1 : Créer un sous compte FTX dédié à la stratégie</h3><p id="19d6ad52-0a45-4145-aa44-4dc46c52f58d" class="">Dans l&#x27;onglet &quot;Wallet&quot; de FTX vous avez un petit bouton + &quot;Create Subaccount&quot;.</p><p id="069e4efa-41c1-41d5-81f4-332912e57d64" class="">
+</p><figure id="2602b281-2854-4e7f-8e20-2e26bad9842b" class="image"><a href="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled.png"><img style="width:384px" src="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled.png"/></a></figure><p id="7c65987d-6f36-4a7f-83e1-ee646ee1a089" class="">
+</p><p id="fdcf7f31-fd3e-4f2b-97a3-768a320e12a2" class="">Vous pouvez le nommer comme vous voulez, dans cette exemple je l&#x27;ai nommé &quot;Grid-Trading&quot; et puis vous pouvez appuyer sur &quot;CREATE SUBACCOUNT&quot;.</p><p id="8773f34b-63c8-40f1-b245-fef8f826e1b0" class="">
+</p><figure id="067f1484-8781-4fdf-9ca2-3a0770a79731" class="image"><a href="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%201.png"><img style="width:288px" src="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%201.png"/></a></figure><p id="590bda80-7ebb-4969-82bd-361675ed7c7d" class="">
+</p><h3 id="bb08bc60-a3b4-42c0-b66a-4ae13a7e7446" class="">Étape 2 : Accéder à la Quant Zone de FTX</h3><p id="dc2d3036-f584-4afd-8b84-893ce7d30532" class="">Pour accéder à la zone Quant de FTX il suffit d&#x27;appuyer sur le button avec 4 petits carré en haut à gauche puis de trouver le button &quot;Quant Zone&quot; dans le menu déroulant et d&#x27;appuyer dessus.</p><p id="e3498191-47df-4ffe-98d8-7491c29faa79" class="">
+</p><figure id="b7a908bb-e170-4944-85f3-3b5a0d4694d5" class="image"><a href="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%202.png"><img style="width:345px" src="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%202.png"/></a></figure><p id="8759f9be-b6fa-48de-9d00-9a2176d86dfb" class="">
+</p><h3 id="ef95e620-df72-4e96-aa66-9c3f182066d0" class="">Étape 3 : Créer votre première règle de trading</h3><p id="19589185-76e5-41a9-88c7-3890e175a149" class="">Pour cette étape vous pouvez commencer par appuyer sur le bouton &quot;+ CREATE NEW RULE&quot;</p><p id="aab66cad-dbff-4c98-9b07-f5bd2d8072bd" class="">
+</p><figure id="20e96947-0f4a-4790-8c4e-4f8a97096acd" class="image"><a href="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%203.png"><img style="width:537px" src="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%203.png"/></a></figure><p id="94e7920e-3091-48dd-8cb8-a56888f65358" class="">
+</p><p id="12b67c5c-ef02-4d25-9cbb-7d04a7aa2750" class="">Le but de cette étape va simplement être de définir nos paramètres pour la stratégie de Grid Trading.
+Vous pouvez donc nommer la règle Set Parameter.
+Pour la condition vous pouvez remplir &quot;true&quot;, cela signifie que les paramètres s&#x27;actualiseront en continu sans condition.</p><p id="8ec3c88c-c210-43b1-91f5-f6a005ffab62" class="">
+</p><figure id="2f7acbdf-6cc7-466c-93c2-491833163653" class="image"><a href="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%204.png"><img style="width:1019px" src="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%204.png"/></a></figure><p id="20787e44-5d25-4eea-839c-838bb9f4d7b6" class="">
+</p><p id="9b6c1aac-fb0b-4f07-bbb9-fe792d4decee" class="">Ensuite on va définir 5 actions, pour ça vous pouvez appuyer sur le bouton &quot;Add Action&quot;, le type de chaque action sera &quot;Set Variable&quot;.
+
+On nommera la première variable &quot;SOL%&quot; et pour sa valeur on va remplir 0.5 . Cela correspond à dire que l&#x27;on souhaite garder 50% de Solana. </p><p id="cf8a6867-937f-4024-897a-70fba4e9bf4f" class="">On va faire la même chose pour les dollar en définissant une autre action Set Variable, pour le nom de la variable on va choisir &quot;USD%&quot; et pour la valeur comme précédemment 0.5 .</p><p id="4f938af2-8368-4467-98db-fb9562f231f4" class="">
+</p><figure id="07869105-fbe5-4b9a-9c59-ac697254bc04" class="image"><a href="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%205.png"><img style="width:1018px" src="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%205.png"/></a></figure><p id="9d7c61a8-3268-4c69-8072-fcd6cfee5925" class="">
+</p><p id="951515d7-ce4c-4b1e-b543-16ff36766e4c" class="">Après ça, on va définir 2 autres variables &quot;SOL_Current%&quot; et &quot;USD_Current%&quot;, le but de ces variables et de calculer la part de SOL et USD en pourcentage par rapport à votre portefeuille total.
+
+La valeur de &quot;SOL_Current%&quot; sera :</p><pre id="75bc62fd-1856-49e2-96c4-9f47b6b28b1b" class="code"><code>price(&quot;SOL/USD&quot;)*balance(&quot;SOL&quot;)/(price(&quot;SOL/USD&quot;)*balance(&quot;SOL&quot;)+balance(&quot;USD&quot;))</code></pre><p id="2c687bd6-d8de-44f9-bcd0-d13bef5ec0b0" class="">
+La valeur de &quot;USD_Current%&quot; sera : </p><pre id="80022f69-8a3e-415b-8c8d-43cbcf44e522" class="code"><code>balance(&quot;USD&quot;)/(price(&quot;SOL/USD&quot;)*balance(&quot;SOL&quot;)+balance(&quot;USD&quot;))</code></pre><p id="36ddc507-6c3e-40e2-8901-67bc7ace7103" class="">
+</p><figure id="8250b350-ffd1-4e9e-abac-2ae4c5fae053" class="image"><a href="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%206.png"><img style="width:1032px" src="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%206.png"/></a></figure><p id="1016d0df-aa5f-494c-9b71-f507fff7de88" class="">
+</p><p id="c27c9aa7-3b98-49d1-b328-eaefa5d10e9a" class="">Enfin la dernière variable à définir c&#x27;est à partir de combien de différence entre vos 2 actifs, notre stratégie va rebalancer les 2 actifs. 
+On nommera cette variable &quot;rebalance%&quot; et on lui attribuera la valeur 0.01 .</p><p id="10c23638-f614-4388-a036-ca3f74b1fd29" class="">
+</p><figure id="de949231-bbf4-4be4-b36a-d4e6168ff14b" class="image"><a href="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%207.png"><img style="width:1018px" src="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%207.png"/></a></figure><p id="a0eb99cf-42d3-41cf-941a-15fc3f8465f4" class="">
+Pour finir appuyez sur le bouton &quot;SAVE AND RUN&quot;</p><h3 id="66418b46-2a96-41c1-bd74-92975976378d" class="">Étape 4 : Définir une règle pour acheter vos actifs</h3><p id="bf597aea-f527-44d1-99b1-af9ea3234c84" class="">Pour ça ajoutez une nouvelle règle que l&#x27;on nomme &quot;Buy SOL&quot;.
+Pour le trigger on va vérifier si nos SOL représente moins de 50% de notre balance total. </p><pre id="6efeba2c-7a39-47c6-9e7b-e84048c2250b" class="code"><code>get_variable(&quot;SOL_Current%&quot;)&lt;get_variable(&quot;SOL%&quot;)-get_variable(&quot;rebalance%&quot;)</code></pre><p id="b881f123-a3d9-4302-942f-c531bd3b1186" class="">
+</p><figure id="20f73399-9675-4a26-95eb-92d46206fd52" class="image"><a href="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%208.png"><img style="width:1021px" src="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%208.png"/></a></figure><p id="f4461a31-d4bc-48b1-9ef7-e0e960fa6ad8" class="">
+Si cette condition est vérifiée alors on créer un ordre d&#x27;achat limite (afin de minimiser les frais) pour pouvoir rééquilibrer notre portefeuille à 50/50. Cocher la case &quot;Post only&quot; permet d&#x27;annuler l&#x27;ordre si il ne s&#x27;exécute pas en tant qu&#x27;ordre limite. On va également annuler tous les anciens ordres.
+Pour l&#x27;order size on rempliera : </p><pre id="1fb37704-4d30-422a-92e9-f169871559d6" class="code"><code>balance(&quot;USD&quot;)/price(&quot;SOL/USD&quot;)/100</code></pre><p id="a0da7e17-6ee9-4547-bf99-498534ecaca5" class="">Et pour le limite price : </p><pre id="72b7f5c5-1612-485f-926c-560d0bab5818" class="code"><code>bid_price(&quot;SOL/USD&quot;)</code></pre><p id="8051b253-736f-4a50-9ce8-d011e76ea3ec" class="">
+</p><figure id="fe3e34ad-c066-43db-9cc7-a8fc976e4f88" class="image"><a href="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%209.png"><img style="width:1016px" src="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%209.png"/></a></figure><p id="a6572dd4-da8b-4a53-87fc-bfb324f0b615" class="">
+</p><p id="4512e00c-2ca6-4224-9220-68929aea4f7b" class="">Vous pouvez ensuite appuyer sur &quot;SAVE AND RUN&quot;.</p><h3 id="358c90cf-e8e5-4a09-8906-1fbe10dfb929" class="">Étape 5 : Définir une règle pour vendre vos actifs</h3><p id="75f23136-e438-4fcb-87a3-a50959177478" class="">Pour ça ajoutez une nouvelle règle que l&#x27;on nomme &quot;Sell SOL&quot;.
+Pour le trigger on va vérifier si nos SOL représente plus de 50% de notre balance total. </p><pre id="1fa14e71-2128-43e5-bd72-2ab742daa552" class="code"><code>get_variable(&quot;SOL_Current%&quot;)&gt;get_variable(&quot;SOL%&quot;)+get_variable(&quot;rebalance%&quot;)</code></pre><p id="813c8570-0121-4f4e-b8ec-c59a06df4f46" class="">
+</p><figure id="2c1ffd82-046c-4f3c-86ce-dfe1db77b6f8" class="image"><a href="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%2010.png"><img style="width:1020px" src="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%2010.png"/></a></figure><p id="9579070f-3a3c-43b1-926c-e84b52647d09" class="">
+</p><p id="e01383a2-0628-49d3-ac96-78919bf19563" class="">Après ça on ajoute une action &quot;Place custom order&quot; qui va nous permettre de vendre une petite partie de nos SOL afin de rebalancer notre portefeuille.
+Pour l&#x27;order size on remplira : </p><pre id="4551a41d-ffce-4a68-9ddd-807c0cf52698" class="code"><code>balance(&quot;SOL&quot;)/100</code></pre><p id="d449da99-e28f-4c9a-8654-dba11ae4cb79" class="">Et pour le limite price : </p><pre id="b1a20b68-98bc-41ff-b63a-804c2a369881" class="code"><code>ask_price(&quot;SOL/USD&quot;)</code></pre><p id="b2791e7f-1103-4506-b331-f8fbb6c93e0f" class="">Et on coche &quot;Post Only&quot; et &quot;Cancel and place a new order&quot; pour les même raisons que la dernière étape.</p><p id="364c64f2-74e2-4d01-a6d3-63e2b1b85159" class="">
+</p><figure id="0c419def-8465-4c7a-9b96-b570b4a6dd02" class="image"><a href="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%2011.png"><img style="width:1018px" src="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%2011.png"/></a></figure><p id="de3d7e9b-bf89-43ea-ba57-fe90341627d7" class="">
+</p><p id="66b095f9-b6d5-4a96-a3d3-168b0e031f61" class="">Vous pouvez ensuite appuyer sur &quot;SAVE AND RUN&quot;. </p><h3 id="bc514a59-8810-4e9e-aba7-a36a0afd1b5b" class="">Étape 6 : Ajouter des USD a votre sous-compte</h3><p id="1b16feb3-285a-489c-b03e-6842105f9281" class="">Pour ça il suffit d&#x27;aller dans le menu de vos sous compte et d&#x27;envoyer depuis votre compte principale ou n&#x27;importe quel autre compte des USD à votre sous-compte que vous avez créé au début.</p><figure id="50bd1fb2-4f9f-42b9-a273-36957f03aa15" class="image"><a href="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%2012.png"><img style="width:480px" src="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%2012.png"/></a></figure><p id="1139266e-1a67-451b-8959-1b4baa41e13a" class="">
+</p><p id="9ea1923c-3cd9-45ca-acd4-f9afecb641e3" class="">⚠️ Pour que la stratégie marche il faut un certain montant minimum d&#x27;USD en fonction de l&#x27;actif sur lequel vous faites tourner la stratégie (se référer à la section FAQ). </p><h3 id="943d7338-3415-4b3e-b603-e66fff7cfb57" class="">Étape 7 : Admirer le résultat</h3><p id="db45751a-7b09-4bb2-84ba-f71538085646" class="">Une fois que toutes les étapes ont été réalisées, le bot devrait être actif et commencer à réaliser des trades afin de rééquilibrer votre balance à 50/50.</p><p id="15e30301-b791-409a-a764-f923d28ac3c4" class="">
+</p><figure id="06c8dbfb-739d-4093-a8a4-d828a35f38e7" class="image"><a href="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%2013.png"><img style="width:1804px" src="Grid%20Trading%20dans%20la%20Quant%20Zone%20de%20FTX%202602b28128544e7f8e202e26bad9842b/Untitled%2013.png"/></a></figure><p id="72bad55c-2ffd-4497-a064-ad5b0fd9ce4c" class="">
+</p><p id="457e9199-bdb5-4e8c-933c-bbbf21c4302a" class="">Après ça votre premier bot de grid trading est en place et vous n&#x27;avez plus rien à toucher. </p><h1 id="bad872ba-3a5c-45f6-8481-6d94a95a37f2" class="">FAQ</h1><hr id="1d130813-fa6f-4e2f-b371-fb74e5e97470"/><blockquote id="10ce1517-6ec1-44c2-895b-00a06eb631c1" class="">⚠️ J&#x27;ai fait tout comme le tutoriel mais mon bot ne fait pas trade pourquoi ?</blockquote><p id="196095f1-cd43-4a11-9669-2316af5ee330" class="">Pour que votre bot puisse tourner il lui faut un minimum d&#x27;USD car FTX oblige à acheter un minimum à chaque fois. 
+La règle pour ça c&#x27;est de vérifier que 1% de la moitié de votre portefeuille est suffisant pour respecter le montant minimum de l&#x27;actif. 
+Pour notre exemple avec le SOL, sur FTX le montant minimum d&#x27;échange du SOL est 0.01 avec un SOL à 150$ cela signifie qu&#x27;un échange doit au moins représenter 1.5$ . Pour que le bot puisse tourner il faut donc au moins 1.5 x 2 x 100 = 300$. Pour lancer cette stratégie sur le SOL vous aurez donc au moins besoin de 300 USD sur votre sous-comtpe. Pour avoir une sécurité si le SOL augmente vous devriez même avoir 500 USD minimum. </p><p id="a35349b9-3978-4319-b265-39a458633bf9" class="">
+</p><blockquote id="3ae2b212-1798-452b-8c74-3654a93d6b87" class="">Pourquoi avoir choisi 1% pour le rebalance ?</blockquote><p id="e4405095-254e-4e11-b808-f64d27f4df3a" class="">Ce choix est purement arbitraire mais je pense personnellement  que si vous mettez un pourcentage plus bas vous risquez d&#x27;être moins performant lors de forte hausse ou forte baisse. Même si vous exécuterez plus souvent des petits trades. 
+Vous pouvez aussi mettre plus haut mais vous aurez moins d&#x27;opportunités.</p></div></article></body></html>
